@@ -9,10 +9,10 @@ class Agent(ABC):
         """Initialize the agent"""
         self.llm = llm
         #declare mode config ("debug", "test", )
-        self.mode_config = mode_config
+        self.mode_config = mode_config or {}
 
-        #extract mode settings from mode_config
-        self.debug_mode = self.mode_config.get('debug_mode', False)
+        #declare language config
+        self.language = self.mode_config.get('language', 'Python')
 
         #build prompts for each agent
         self.prompt_template = self.build_prompt()
