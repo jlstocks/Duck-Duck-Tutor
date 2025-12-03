@@ -1,0 +1,6 @@
+__pycache__/
+closed/
+.venv
+*.venv
+venv/
+conversations/

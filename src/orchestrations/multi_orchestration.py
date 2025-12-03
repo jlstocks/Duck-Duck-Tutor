@@ -1,5 +1,5 @@
-from typing import Dict, Any
-from base_orchestration import Orchestration
+from typing import Dict, Any, Optional
+from orchestrations.base_orchestration import Orchestration
 
 from agents.expert_agent import ExpertAgent
 from agents.teacher_agent import TeacherAgent
@@ -21,13 +21,16 @@ class MultiOrchestration(Orchestration):
             'teacher_agent': TeacherAgent(self.llm, mode_config = self.mode_config)
         }
     
-    def run_workflow(self, user_input: str) -> Dict[str, Any]:
+    def run_workflow(self, user_input: str, context: Optional[str] = None) -> Dict[str, Any]:
         """Override the workflow method"""
         #initialize the state
         state = {
             'user_input': user_input,
             'stage': 'initial'
         }
+
+        if context:
+            state['conversation_history'] = context
         
         #run the tutor agent
         state = self.run_agent('tutor_agent', state)
@@ -53,8 +56,7 @@ class MultiOrchestration(Orchestration):
         }
         
         #add context for session handling
-        if 'context' in state:
-            agent_input['context'] = state['context']
+        agent_input['conversation_history'] = state.get('conversation_history', '')
 
         #tutor agent
         if agent_name == 'tutor_agent':
@@ -118,5 +120,5 @@ class MultiOrchestration(Orchestration):
         
         #update input to include other responses
         base_input['tutor_response'] = tutor_response
-        base_input['expert_analysis'] = expert_response
+        base_input['expert_response'] = expert_response
         return base_input

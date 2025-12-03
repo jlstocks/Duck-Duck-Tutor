@@ -1,5 +1,5 @@
 from langchain_core.prompts import ChatPromptTemplate
-from base_agent import Agent
+from agents.base_agent import Agent
 
 class TutorAgent(Agent):
     def build_prompt(self):
@@ -232,11 +232,11 @@ IMPORTANT GUIDELINES:
 
         return ChatPromptTemplate.from_messages([
             ("system", system_message),
-            ("user", """
+            ("user", """{conversation_history}
 
-
-""")
-        ])
+Student's request: {user_input}
+             
+Provide a helpful, direct response to the student's request.""")])
     
     def get_agent_name(self) -> str:
         return "tutor_agent_result"

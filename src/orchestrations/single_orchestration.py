@@ -1,5 +1,5 @@
 from typing import Dict, Any, Union
-from base_orchestration import Orchestration
+from orchestrations.base_orchestration import Orchestration
 from agents.tutor_agent import TutorAgent
 
 class SingleOrchestration(Orchestration):
@@ -15,6 +15,9 @@ class SingleOrchestration(Orchestration):
             'user_input': user_input
         }
 
+        if context:
+            state['conversation_history'] = context
+
         #run the tutor agent
         state = self.run_agent('tutor_agent', state)
 
@@ -22,6 +25,10 @@ class SingleOrchestration(Orchestration):
     
     def get_agent_input(self, agent_name, state):
         """Override get agent input to return only the user-input for the tutor agent"""
-        return {
+        agent_input = {
             'user_input': state.get('user_input', '')
         }
+
+        agent_input['conversation_history'] = state.get('conversation_history', '')
+
+        return agent_input
