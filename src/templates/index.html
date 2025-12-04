@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duck Duck Tutor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h1>Duck Duck Tutor</h1>
+            
+            <button class="btn btn-primary" onclick="showConfig()">New Conversation</button>
+            
+            <div class="divider"></div>
+            
+            <h3>Previous Conversations</h3>
+            <div id="conversations-list"></div>
+        </div>
+        
+        <div class="main-content">
+            <div id="config-screen" class="config-screen">
+                <h2>Welcome to Duck Duck Tutor!</h2>
+                <p>Begin your learning session:</p>
+                
+                <div class="form-group">
+                    <label for="language">Programming Language</label>
+                    <select id="language" class="form-control">
+                        {% for lang in languages %}
+                        <option value="{{ lang }}">{{ lang }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="orchestration">Tutoring Mode</label>
+                    <select id="orchestration" class="form-control">
+                        <option value="single">Single Agent (Fast, direct tutoring)</option>
+                        <option value="multi">Multi-Agent (Thorough, collaborative review)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="mode">Learning Focus</label>
+                    <select id="mode" class="form-control">
+                        {% for key, value in modes.items() %}
+                        <option value="{{ key }}">{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <button class="btn btn-primary btn-large" onclick="startSession()">Start Learning Session</button>
+            </div>
+            
+            <div id="chat-screen" class="chat-screen" style="display: none;">
+                <div class="chat-header">
+                    <h2 id="chat-title">Python Tutor</h2>
+                    <button class="btn btn-secondary" onclick="showConfig()">New Session</button>
+                </div>
+                
+                <div class="chat-messages" id="chat-messages"></div>
+                
+                <div class="chat-input-container">
+                    <textarea id="chat-input" placeholder="Ask me anything about the language you want to learn!" rows="3"></textarea>
+                    <button class="btn btn-primary" onclick="sendMessage()">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
