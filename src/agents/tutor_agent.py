@@ -248,11 +248,13 @@ IMPORTANT GUIDELINES:
 
         return ChatPromptTemplate.from_messages([
             ("system", system_message),
-            ("user", """Conversation history: {conversation_history}
+            ("user", """Previous conversation: 
+{conversation_history}
+===             
 
-Student's request: {user_input}
+Current student request: {user_input}
              
-Provide a helpful, direct response to the student's request.""")])
+Provide a helpful, direct response to the student's request. If the student refers to something previously discussed, build on that conversation""")])
     
     def get_agent_name(self) -> str:
         return "tutor_agent_result"

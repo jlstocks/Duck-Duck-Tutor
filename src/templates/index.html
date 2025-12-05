@@ -37,12 +37,12 @@
                     <label for="orchestration">Tutoring Mode</label>
                     <select id="orchestration" class="form-control">
                         <option value="single">Single Agent (Fast, direct tutoring)</option>
-                        <option value="multi">Multi-Agent (Thorough, collaborative review)</option>
+                        <option value="multi">Multi-Agent (Collaborative agents)</option>
                     </select>
                 </div>
                 
                 <div class="form-group">
-                    <label for="mode">Learning Focus</label>
+                    <label for="mode">Tutoring Focus</label>
                     <select id="mode" class="form-control">
                         {% for key, value in modes.items() %}
                         <option value="{{ key }}">{{ value }}</option>
